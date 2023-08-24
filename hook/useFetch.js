@@ -9,10 +9,11 @@ const useFetch=()=> {
     const fetchData = async () =>{
         setIsLoading(true)
         try {
-            console.log("trying get!")
+            //console.log("trying get!")
             const response = await axios.get('http://10.0.2.2:3000/api/products/')
-            console.log("get complete!")
+            
             setData(response.data)
+            //console.log("get complete!", data)
             setIsLoading(false)
         } catch (error) {
             setError(error)

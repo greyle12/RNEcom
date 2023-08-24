@@ -20,19 +20,21 @@ const Profile = ({navigation}) => {
     const checkExistingUser = async ()=> {
         const id = await AsyncStorage.getItem('id')
         const userId = `user${JSON.parse(id)}`;
-
+        
         try {
             const currentUser = await AsyncStorage.getItem(userId);
-
+            
             if(currentUser !== null){
-                const parseData = JSON.parese(currentUser)
+                //console.log("--currentUser:", currentUser)
+                const parseData = JSON.parse(currentUser)
+                //console.log("parseData", parseData);
                 setUserData(parseData)
                 setUserLogin(true)
             }else{
                 navigation.navigate('Login')
             }
         } catch (error) {      
-            console.log("Error retrieving the data", error);
+            console.log("CheckExistingUser: Error retrieving the data", error);
         }
     }
 
@@ -78,7 +80,7 @@ const Profile = ({navigation}) => {
             await AsyncStorage.multiRemove([userId, 'id'])
             navigation.replace('Bottom Navgation')
         } catch (error) {
-            console.log("Error log out the user", error);
+            console.log("userLogout Error log out the user", error);
         }
     }
 
@@ -118,7 +120,7 @@ const Profile = ({navigation}) => {
                     />
 
                     <Text style={styles.name}>
-                        {userLogin === true ? "userData.name" : "Please login into your account"}
+                        {userLogin === true ? userData.username : "Please login into your account"}
                     </Text>
                     {userLogin === false ? (
                         <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
@@ -128,7 +130,7 @@ const Profile = ({navigation}) => {
                         </TouchableOpacity>
                     ): (
                         <View style={styles.loginBtn} >
-                            <Text style={styles.menuText} >dwdsad@asd.com</Text>
+                            <Text style={styles.menuText} >{userData.email}</Text>
                         </View>
                     )}
 

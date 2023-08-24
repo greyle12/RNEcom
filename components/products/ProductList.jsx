@@ -7,7 +7,6 @@ import ProductCardView from './ProductCardView';
 
 const ProductList = () => {
     const {data, isLoading, error} = useFetch();
-    //console.log(data);
     if(isLoading){
         return (
             <View style={styles.loadingContainer}>

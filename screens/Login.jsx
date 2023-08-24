@@ -31,7 +31,7 @@ const Login = ({navigation}) => {
     const invalidForm = () => {
         Alert.alert(
             "Invalid Form",
-            "Please provide al required fields",
+            "Please provide all required fields",
             [
                 {
                     text: "Cancel", onPress: ()=>console.log("cancel clear")
@@ -55,14 +55,16 @@ const Login = ({navigation}) => {
             const response = await axios.post(endpoint, data)
             if(response.status === 200){
                 setLoader(false)
-                console.log("Login successfully!")
-                //console.log(response.data)
+                console.log("==============================Login successfully 1!")
+                
                 setResponseData(response.data);
-
+                    
                 await AsyncStorage.setItem(`user${responseData._id}`, JSON.stringify(responseData))
                 
-                //const newUser = await AsyncStorage.getItem(`user${responseData._id}`)
+                const newUser = await AsyncStorage.getItem(`user${responseData._id}`)
                 await AsyncStorage.setItem('id', JSON.stringify(responseData._id))
+                console.log("==============================Login successfully 2!")
+                console.log(newUser)
                 navigation.replace('Bottom Navgation')
 
 
@@ -85,6 +87,7 @@ const Login = ({navigation}) => {
             Alert.alert(
                 "Error",
                 "Oops, somethine went wrong, please try again",
+                console.log(error)
                 [
                     {defaultIndex : 1}
                 ]

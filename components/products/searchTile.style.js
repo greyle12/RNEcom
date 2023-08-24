@@ -42,6 +42,10 @@ const styles = StyleSheet.create({
     },
     productPrice: {
         
+    },
+    quantityContainer:{
+        marginRight: SIZES.medium,
+        flexDirection: "row"
     }
 })
 

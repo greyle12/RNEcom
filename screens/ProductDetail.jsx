@@ -13,7 +13,7 @@ import { useRoute } from '@react-navigation/native';
 const ProductDetails = ({navigation}) => {
     const route = useRoute();
     const {item} = route.params;
-    //console.log(item)
+    console.log("profile item:",item)
     const [count, setCount] = useState(1)
 
     const increment = () => {

@@ -74,7 +74,7 @@ const Search = () => {
             ): (
                 <FlatList 
                     data={searchResults}
-                    keyExtractor={(item) => item._id}
+                    keyExtractor={(item) => item.cartItem._id}
                     renderItem={({item})=> (<SearchTile item = {item} />)}
                     style={{marginHorizontal: 12}}
                 />
