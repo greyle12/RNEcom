@@ -11,6 +11,7 @@ import { SIZES } from '../assets/constants';
 import { useRoute } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { Alert } from 'react-native';
 
 const ProductDetails = ({navigation}) => {
     const [userId, setUserId] = useState(null)
@@ -63,13 +64,57 @@ const ProductDetails = ({navigation}) => {
         }
     }
 
+    const addToFavorite = async(values) => {
+        const addShcema = {"userId": `${userId}`, "favoriteItem":`${values}`}
+        //console.log(addShcema)
+        try {
+            const endpoint="http://10.0.2.2:3000/api/favorite/add"
+            const data = addShcema;
+
+            const response = await axios.post(endpoint, data)
+            if(response.status === 200){
+                console.log("add cartItem successfully! ")
+                //console.log("res data",response.data)
+                Alert.alert(
+                    "Good Job !",
+                    "add to your favorite successfully!",
+                    [
+                        {defaultIndex : 1}
+                    ]
+                )
+            
+            }
+            if(response.status === 400){
+                console.log("your've already added into your favorite before.")
+                //console.log("res data",response.data)
+                Alert.alert(
+                    "Oops",
+                    "You've already added into your favorite before.",
+                    [
+                        {defaultIndex : 1}
+                    ]
+                )
+            }
+        }catch(error){
+            console.log("Error to add favorite:", error)
+            Alert.alert(
+                "Error",
+                "Something went wrong",
+                error
+                [
+                    {defaultIndex : 1}
+                ]
+            )
+        }
+    }
+
 
     
     return(
         <SafeAreaView style={styles.container}>
             <View style={styles.upperRow} >
                 <ScreenHeaderBtn iconUrl={icons.chevronLeft} dimension={"100%"} handlePress={()=>navigation.goBack()} />
-                <ScreenHeaderBtn iconUrl={icons.heart} dimension={"100%"} handlePress={()=>navigation.goBack()} />
+                <ScreenHeaderBtn iconUrl={icons.heart} dimension={"100%"} handlePress={()=>addToFavorite(item._id)} />
             </View>
             <Image 
                 source={{
