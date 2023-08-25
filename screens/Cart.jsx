@@ -4,11 +4,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 import CartTile from '../components/products/CartTile';
+import ScreenHeaderBtn from '../components/header/ScreenHeaderBtn';
+import icons from '../assets/constants/icons';
+import { COLORS, SIZES } from "../assets/constants/index";
+import { useNavigation } from '@react-navigation/native';
 
 const Cart = () => {
     const [loader, setLoader] = useState(false)
     const [cartData, setCartData] = useState(null);
-    //const [obsecureText, setObsecureText] = useState(false)
+    const navigation = useNavigation()
 
     useEffect(()=>{
         getCart();
@@ -57,13 +61,17 @@ const Cart = () => {
                     There is nothing in your cart, go to community to add something!
                 </Text>
             ) : (
-                <FlatList 
-                    data={cartData}
-                    keyExtractor={(item) => item._id}
-                    renderItem={({item})=> (<CartTile item = {item} />)}
-                    style={{marginHorizontal: 12}}
-                />
-                //<Text></Text>
+                <View>
+                    <View style={styles.upperRow} >
+                        <ScreenHeaderBtn iconUrl={icons.chevronLeft} dimension={"100%"} handlePress={()=>navigation.goBack()} />
+                    </View>
+                    <FlatList 
+                        data={cartData}
+                        //keyExtractor={(item) => item._id}
+                        renderItem={({item})=> (<CartTile item = {item} />)}
+                        style={{marginHorizontal: 12}}
+                    />
+                </View>
         )}
         
         </View>
@@ -74,5 +82,15 @@ export default Cart;
 
 
 const styles = StyleSheet.create({
+    upperRow: {
+    marginHorizontal: 20,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignContent: "center",
+    top: SIZES.xxLarge,
+    width: SIZES.width -44,
+    zIndex: 999,
+    marginBottom: 50
+    }
     
 })

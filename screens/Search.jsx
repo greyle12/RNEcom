@@ -21,7 +21,7 @@ const Search = () => {
             const response = axios.get(`http://10.0.2.2:3000/api/products/search/${searchKey}`)
             //console.log(searchKey);
             //console.log('=============================');
-            //console.log( (await response).data)
+            console.log( (await response).data)
             //.log('=============================');
             setSearchResults( (await response).data)
         } catch (error) {
@@ -74,7 +74,7 @@ const Search = () => {
             ): (
                 <FlatList 
                     data={searchResults}
-                    keyExtractor={(item) => item.cartItem._id}
+                    keyExtractor={(item) => item._id}
                     renderItem={({item})=> (<SearchTile item = {item} />)}
                     style={{marginHorizontal: 12}}
                 />

@@ -44,8 +44,29 @@ const styles = StyleSheet.create({
         
     },
     quantityContainer:{
-        marginRight: SIZES.medium,
-        flexDirection: "row"
+        //marginRight: SIZES.small,
+        flexDirection: "row",
+        alignContent: "center",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    productQuantity: {
+        fontSize: SIZES.medium+2,
+        color: COLORS.black,
+    },
+    upperRow:{
+        marginHorizontal: 20,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignContent: "center",
+        top: SIZES.large,
+        width: SIZES.width -44,
+        zIndex: 999,
+        marginBottom: 15,
+       },
+    cartContainer: {
+        flex: 1,
+        marginBottom: 10,
     }
 })
 
