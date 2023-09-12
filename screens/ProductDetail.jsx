@@ -84,7 +84,7 @@ const ProductDetails = ({navigation}) => {
                 )
             
             }
-            if(response.status === 400){
+            else if(response.status === 400){
                 console.log("your've already added into your favorite before.")
                 //console.log("res data",response.data)
                 Alert.alert(

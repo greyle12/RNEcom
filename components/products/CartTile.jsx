@@ -15,11 +15,11 @@ const CartTile = ({item}) => {
     const [userId, setUserId] = useState(null)
     const [cartitem, setCartItem] = useState(null)
 
-    console.log("======================================================")
+    //console.log("======================================================")
     //console.log("Item:",item)
     const navigation = useNavigation()
     const cartItem = item.cartItem
-    console.log("cartItem:",cartItem)
+    //console.log("cartItem:",cartItem)
 
     useEffect(()=>{
         getUserId();

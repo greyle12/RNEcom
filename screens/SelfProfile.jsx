@@ -9,7 +9,7 @@ import icons from '../assets/constants/icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const Profile = ({navigation}) => {
+const SelfProfile = ({navigation}) => {
     const [userData, setUserData] = useState(null)
     const [userLogin, setUserLogin] = useState(false)
 
@@ -130,9 +130,7 @@ const Profile = ({navigation}) => {
                         </TouchableOpacity>
                     ): (
                         <View style={styles.loginBtn} >
-                            <TouchableOpacity onPress={()=>navigation.navigate("SelfProfile")}>
                             <Text style={styles.menuText} >{userData.email}</Text>
-                            </TouchableOpacity>
                         </View>
                     )}
 
@@ -148,7 +146,7 @@ const Profile = ({navigation}) => {
                                         dimension={"70%"}
                                         handlePress={()=>{}}
                                     />
-                                    <Text style={styles.menuText}>Favorite</Text>
+                                    <Text style={styles.menuText}>Username: {userData.username}</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -159,7 +157,7 @@ const Profile = ({navigation}) => {
                                         dimension={"70%"}
                                         handlePress={()=>{}}
                                     />
-                                    <Text style={styles.menuText}>Order</Text>
+                                    <Text style={styles.menuText}>Email: {userData.email}</Text>
                                 </View>
                             </TouchableOpacity>
 
@@ -170,42 +168,11 @@ const Profile = ({navigation}) => {
                                         dimension={"70%"}
                                         handlePress={()=>{}}
                                     />
-                                    <Text style={styles.menuText}>Cart</Text>
+                                    <Text style={styles.menuText}>Location: {userData.location}</Text>
                                 </View>
                             </TouchableOpacity>
 
-                            <TouchableOpacity onPress={()=>clearCache()}>
-                                <View style={styles.menuItem(0.2)}>
-                                    <ScreenHeaderBtn 
-                                        iconUrl={icons.heartOutline} 
-                                        dimension={"70%"}
-                                        handlePress={()=>{}}
-                                    />
-                                    <Text style={styles.menuText}>Clear cache</Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={()=>deleteAccount()} >
-                                <View style={styles.menuItem(0.2)}>
-                                    <ScreenHeaderBtn 
-                                        iconUrl={icons.heartOutline} 
-                                        dimension={"70%"}
-                                        handlePress={()=>{}}
-                                    />
-                                    <Text style={styles.menuText}>Delete Account</Text>
-                                </View>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={()=>logout()}>
-                                <View style={styles.menuItem(0.2)}>
-                                    <ScreenHeaderBtn 
-                                        iconUrl={icons.heartOutline} 
-                                        dimension={"70%"}
-                                        
-                                    />
-                                    <Text style={styles.menuText}>Logout</Text>
-                                </View>
-                            </TouchableOpacity>
+                           
                         </View>
                     )}
 
@@ -216,4 +183,4 @@ const Profile = ({navigation}) => {
     )
 }
 
-export default Profile;
+export default SelfProfile;

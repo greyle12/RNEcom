@@ -32,6 +32,7 @@ const  Welcome =() => {
                     <ScreenHeaderBtn 
                         iconUrl={icons.camera}  
                         dimension='100%' 
+                        handlePress={()=> {navigation.navigate('Post')}}
                     />
                 </TouchableOpacity>
             

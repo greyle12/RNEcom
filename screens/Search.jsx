@@ -51,7 +51,7 @@ const Search = () => {
                         style={styles.searchInput}
                         value={searchKey}
                         onChangeText={setSearchKey}
-                        placeholder='What are you looking for'
+                        placeholder='What are you looking for? please type at least 3 characters'
                     />
                 </View>
               
