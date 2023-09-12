@@ -7,6 +7,7 @@ import useFetch from '../../hook/useFetch';
 
 const ProductRow = () => {
     const {data, isLoading, error} = useFetch()
+    //console.log("data:",data)
     
     const products = [1,2,3,4]
     return (

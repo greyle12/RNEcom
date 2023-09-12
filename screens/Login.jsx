@@ -107,7 +107,7 @@ const Login = ({navigation}) => {
                         style={styles.loginImage}
                     />
 
-                    <Text style={styles.title}>Unlimit Luxurious Furniture</Text>
+                    <Text style={styles.title}>FMart Furniture</Text>
 
                     <Formik
                         initialValues={{email: '', password: ''}}

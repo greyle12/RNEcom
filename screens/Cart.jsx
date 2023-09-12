@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import { useStripe } from '@stripe/stripe-react-native';
@@ -14,7 +14,7 @@ import { Alert } from 'react-native';
 
 const Cart = () => {
     const [loader, setLoader] = useState(false)
-    const [cartData, setCartData] = useState(null);
+    const [cartData, setCartData] = useState([]);
     let total = 0
     const navigation = useNavigation()
     const [totalPrice, setTotalPrice] = useState(0)
@@ -23,15 +23,24 @@ const Cart = () => {
     useEffect(()=>{
         getCart().then(()=>{
             // console.log("Data:", cartData)
+            // let resdata = cartData
+            // if (resdata !== null){
+            //     resdata.map((item)=>{
+            //         total += item.quantity* item.cartItem.price
+            //     })
+            //     console.log("total:", total.toFixed(2))
+            //     setTotalPrice(total.toFixed(2))
+            // }
         })
-    },[]);
+    },[cartData]);
+
 
     const getCart = async () => {
         const id = await AsyncStorage.getItem('id')
         const userId = `${JSON.parse(id)}`;
-        console.log("======id:", userId)
+        //console.log("======id:", userId)
         try {
-            console.log("trying get cart!")
+            //console.log("trying get cart!")
             
             const endpoint=`http://10.0.2.2:3000/api/cart/find/${userId}`
             const response = await axios.get(endpoint)
@@ -41,13 +50,13 @@ const Cart = () => {
                 setCartData(resdata)
                 //console.log("cartItemData:", JSON.stringify(cartData))
                 //const cart = 
-                console.log("cartdata:",resdata)
-                console.log("get cart complete!")
-                if (resdata !== null){
+                //console.log("cartdata:",cartData)
+                //console.log("get cart complete!")
+                if (resdata.length != 0){
                     resdata.map((item)=>{
                         total += item.quantity* item.cartItem.price
                     })
-                    console.log("total:", total.toFixed(2))
+                    //console.log("total:", total.toFixed(2))
                     setTotalPrice(total.toFixed(2))
                 }
                 
@@ -72,18 +81,18 @@ const Cart = () => {
         
     }
     // const countTotal=async()=>{
-    //     console.log("cartData:", cartData)
+    //     //console.log("cartData:", cartData)
     //     if (cartData !== null){
     //         cartData.map((item)=>{
     //             total += item.quantity* item.cartItem.price
     //         })
-    //         console.log("total:", total.toFixed(2))
+    //         //console.log("total:", total.toFixed(2))
     //         setTotalPrice(total.toFixed(2))
     //     }
     // }
     const onCheckout = async()=>{
         let stripeTotal = (totalPrice*100).toFixed()
-        const stripeReq = {"amount": `${stripeTotal}`}
+        const stripeReq = {"amount": stripeTotal}
         console.log("stripeReq", stripeReq)
         const stripeUrl = 'http://10.0.2.2:3000/api/payments/intents'
         // 1. Create a payment intent
@@ -120,11 +129,18 @@ const Cart = () => {
     }
 
     return(
+        
+        <SafeAreaView style={styles.container}>
         <View>
-            {cartData === null ? (
+            {cartData.length == 0 ? (
+                <View>
+                <View style={styles.upperRow} >
+                <ScreenHeaderBtn iconUrl={icons.chevronLeft} dimension={"100%"} handlePress={()=>navigation.goBack()} />
+            </View>
                 <Text>
                     There is nothing in your cart, go to community to add something!
                 </Text>
+                </View>
             ) : (
                 <View>
                     <View style={styles.upperRow} >
@@ -136,14 +152,17 @@ const Cart = () => {
                         renderItem={({item})=> (<CartTile item = {item} />)}
                         style={{marginHorizontal: 12}}
                     />
+                    <View style={styles.wrapper}>
+                        <Text style={styles.totalTxt}>Total:                                {totalPrice}</Text>
+                        <Button style={styles.checkoutBtn} title={"checkout"} loader={false} isValid={false} onPress={onCheckout} />
+                    </View>
                 </View>
         )}
-        <View>
-            <Text>Total: {totalPrice}</Text>
-            <Button title={"checkout"} loader={false} isValid={false} onPress={onCheckout}/>
-        </View>
+        
         
         </View>
+        </SafeAreaView>
+        
     )
 }
 
@@ -151,6 +170,9 @@ export default Cart;
 
 
 const styles = StyleSheet.create({
+    container:{
+
+    },
     upperRow: {
     marginHorizontal: 20,
     flexDirection: "row",
@@ -160,6 +182,21 @@ const styles = StyleSheet.create({
     width: SIZES.width -44,
     zIndex: 999,
     marginBottom: 50
-    }
+    },
+    wrapper:{
+        alignItems: "center",
+        paddingLeft: SIZES.small/2,
+        paddingTop: SIZES.xxlarge,
+        marginTop: 10,
+       
+    },
+    totalTxt:{
+        fontSize: SIZES.xLarge,
+        fontStyle: 'normal',
+        fontWeight: '700',
+        marginLeft: 20,
+        marginBottom: '20%'
+
+    },
     
 })
